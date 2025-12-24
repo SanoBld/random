@@ -1,4 +1,5 @@
-# Random est une application web moderne et polyvalente conçue pour faciliter les tirages au sort, la création d'équipes et les jeux de hasard (dés, pile ou face). L'interface utilise un design "Glassmorphism" élégant avec une gestion dynamique des thèmes.
+# Random
+**Random** est une application web moderne et polyvalente conçue pour faciliter les tirages au sort, la création d'équipes et les jeux de hasard (dés, pile ou face). L'interface utilise un design "Glassmorphism" élégant avec une gestion dynamique des thèmes.
 
 ---
 
