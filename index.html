@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Randomizer Épuré</title>
+    <title>Randomizer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="theme-auto">
@@ -29,7 +29,9 @@
                     <span id="playerCount">0 joueurs</span>
                 </div>
                 <textarea id="listInput" placeholder="Entrez un nom par ligne..."></textarea>
-                <button class="btn-main" onclick="clearParticipants()">EFFACER LA LISTE</button>
+                <div class="btn-group">
+                    <button class="btn-text-danger" onclick="clearParticipants()">EFFACER</button>
+                </div>
             </section>
 
             <section class="card glass">
@@ -37,7 +39,7 @@
                     <h2>ROULETTE</h2>
                     <button class="btn-icon" onclick="openZoom('wheel')">⛶</button>
                 </div>
-                <div class="wheel-container">
+                <div class="wheel-wrapper">
                     <div class="indicator"></div>
                     <canvas id="wheelCanvas" width="500" height="500"></canvas>
                 </div>
@@ -52,8 +54,8 @@
                     <button class="btn-icon" onclick="openZoom('dice')">⛶</button>
                 </div>
                 <div id="diceDisplay" class="dice-container"></div>
-                <div style="display:flex; gap:10px;">
-                    <input type="number" id="diceCount" value="1" min="1" max="25">
+                <div class="controls-row">
+                    <input type="number" id="diceCount" value="1" min="1" max="10">
                     <button class="btn-main" onclick="rollDice()">LANCER</button>
                 </div>
             </section>
@@ -63,44 +65,36 @@
                     <h2>ÉQUIPES</h2>
                     <button class="btn-icon" onclick="openZoom('teams')">⛶</button>
                 </div>
-                <div id="teamDisplay" class="grid-content"></div>
-                <div style="display:flex; gap:10px;">
+                <div id="teamDisplay" class="scrollable-content"></div>
+                <div class="controls-row">
                     <input type="number" id="teamCount" value="2" min="2">
                     <button class="btn-main" onclick="generateTeams()">GÉNÉRER</button>
                 </div>
             </section>
         </div>
 
-        <section class="card glass">
-            <div class="card-header">
+        <section class="card glass center-content">
+            <div class="card-header" style="width:100%">
                 <h2>PILE OU FACE</h2>
                 <button class="btn-icon" onclick="openZoom('coin')">⛶</button>
             </div>
-            <div class="coin">
-                <div class="side front">?</div>
-                <div class="side back"></div>
-            </div>
-            <button class="btn-main" onclick="flipCoin()" style="margin-top:20px;">LANCER LA PIÈCE</button>
-        </section>
-
-        <section class="card glass ad-card">
-            <div class="ad-label">SPONSORISÉ</div>
-            <div id="frame" style="width: 100%; margin: auto; position: relative; z-index: 10;">
-                <iframe data-aa='2422158' src='//acceptable.a-ads.com/2422158/?size=Adaptive'
-                        style='border:0; padding:0; width:100%; height:90px; overflow:hidden; display: block; margin: auto'></iframe>
-                <div style="width: 100%; margin:auto; text-align: left;">
-                    <a target="_blank" class="ad-link" href="https://aads.com/campaigns/new/?source_id=2422158&source_type=ad_unit&partner=2422158">Advertise here</a>
+            <div class="coin-container">
+                <div class="coin">
+                    <div class="side front">?</div>
+                    <div class="side back"></div>
                 </div>
             </div>
+            <button class="btn-main" onclick="flipCoin()" style="max-width: 300px;">LANCER LA PIÈCE</button>
         </section>
 
         <section class="card glass">
             <div class="card-header">
                 <h2>HISTORIQUE</h2>
-                <button onclick="clearHistory()" class="btn-danger-nav" style="border:none;">EFFACER</button>
+                <button onclick="clearHistory()" class="btn-text-danger">VIDER</button>
             </div>
-            <div id="historyList"></div>
+            <div id="historyList" class="history-list"></div>
         </section>
+
     </main>
 
     <canvas id="confettiCanvas"></canvas>
@@ -109,7 +103,7 @@
         <div class="modal-content glass" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <h2 id="modalTitle">TITRE</h2>
-                <button onclick="closeModal()" class="btn-icon" style="font-size:20px">&times;</button>
+                <button onclick="closeModal()" class="btn-icon">&times;</button>
             </div>
             <div id="modalBody" class="modal-body"></div>
         </div>
