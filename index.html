@@ -29,8 +29,8 @@
                     <span id="playerCount">0 joueurs</span>
                 </div>
                 <textarea id="listInput" placeholder="Entrez un nom par ligne..."></textarea>
-                <div class="btn-group">
-                    <button class="btn-text-danger" onclick="clearParticipants()">EFFACER</button>
+                <div class="btn-row">
+                    <button class="btn-text-danger" onclick="clearParticipants()">EFFACER LA LISTE</button>
                 </div>
             </section>
 
@@ -54,8 +54,9 @@
                     <button class="btn-icon" onclick="openZoom('dice')">⛶</button>
                 </div>
                 <div id="diceDisplay" class="dice-container"></div>
+                
                 <div class="controls-row">
-                    <input type="number" id="diceCount" value="1" min="1" max="10">
+                    <input type="number" id="diceCount" value="1" min="1" max="12">
                     <button class="btn-main" onclick="rollDice()">LANCER</button>
                 </div>
             </section>
@@ -108,8 +109,6 @@
             <div id="modalBody" class="modal-body"></div>
         </div>
     </div>
-
-    <div id="toastMessage" class="toast-message"></div>
 
     <script src="script.js"></script>
 </body>
