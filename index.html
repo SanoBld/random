@@ -5,68 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Randomizer</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body class="theme-auto">
 
+    <div class="background-blobs"></div>
+
     <nav class="theme-bar glass">
         <div class="nav-group">
-            <button onclick="setTheme('theme-auto')">🌓 AUTO</button>
+            <button onclick="setTheme('theme-auto')">🌓 Auto</button>
             <button onclick="togglePerformance()" id="perfBtn">🚀 MODE ÉCO : OFF</button>
         </div>
         <div class="color-picker-wrapper">
             <input type="color" id="colorPicker" value="#007aff" oninput="updateAccent(this.value)">
         </div>
-        <button onclick="resetApp()" class="btn-danger-nav">RESET</button>
+        <button onclick="resetApp()" class="btn-danger-nav">RÉINITIALISER</button>
     </nav>
 
     <main class="container">
+        
         <section class="card glass">
             <div class="card-header">
                 <h2>PARTICIPANTS</h2>
                 <span id="playerCount" class="badge">0 joueurs</span>
             </div>
-            <textarea id="listInput" placeholder="Noms ici..."></textarea>
+            <div class="input-area">
+                <textarea id="listInput" placeholder="Entrez les noms (un par ligne)..."></textarea>
+                <div class="btn-row-right">
+                    <button onclick="clearParticipants()" class="btn-text-danger">Tout effacer</button>
+                </div>
+            </div>
         </section>
 
         <div class="grid-split">
             <section class="card glass center-content">
-                <div class="card-header"><h2>ROULETTE</h2></div>
+                <div class="card-header">
+                    <h2>ROULETTE</h2>
+                    <button class="btn-icon" onclick="openZoom('wheel')">⛶</button>
+                </div>
                 <div class="wheel-wrapper">
                     <div class="indicator"></div>
                     <canvas id="wheelCanvas"></canvas>
                 </div>
-                <button onclick="spinWheel()" class="btn-main">LANCER</button>
+                <button onclick="spinWheel()" class="btn-main bounce">LANCER LA ROUE</button>
             </section>
 
             <section class="card glass">
-                <div class="card-header"><h2>DÉS</h2></div>
+                <div class="card-header">
+                    <h2>ÉQUIPES</h2>
+                    <button class="btn-icon" onclick="openZoom('teams')">⛶</button>
+                </div>
                 <div class="controls-row">
-                    <input type="number" id="diceCount" value="1" min="1" max="12">
-                    <button class="btn-main" onclick="rollDice()">LANCER</button>
+                    <div class="input-group">
+                        <label>Nombre d'équipes</label>
+                        <input type="number" id="teamCount" value="2" min="2" max="50">
+                    </div>
+                    <button class="btn-main small" onclick="generateTeams()">Générer</button>
+                </div>
+                <div id="teamDisplay" class="grid-content"></div>
+            </section>
+        </div>
+
+        <div class="grid-split">
+            <section class="card glass">
+                <div class="card-header">
+                    <h2>DÉS</h2>
+                    <button class="btn-icon" onclick="openZoom('dice')">⛶</button>
+                </div>
+                <div class="controls-row">
+                    <div class="input-group">
+                        <label>Quantité (Max 12)</label>
+                        <input type="number" id="diceCount" value="2" min="1" max="12">
+                    </div>
+                    <button class="btn-main small" onclick="rollDice()">Lancer</button>
                 </div>
                 <div id="diceDisplay" class="dice-container"></div>
                 <div id="diceResult" class="dice-result hidden">Total : <span id="diceTotalValue">0</span></div>
             </section>
+
+            <section class="card glass center-content">
+                <div class="card-header">
+                    <h2>PILE OU FACE</h2>
+                    <button class="btn-icon" onclick="openZoom('coin')">⛶</button>
+                </div>
+                <div class="coin-wrapper">
+                    <div id="coin" class="coin">
+                        <div class="side front">?</div>
+                        <div class="side back"></div>
+                    </div>
+                </div>
+                <button class="btn-main" onclick="flipCoin()">Lancer la pièce</button>
+            </section>
         </div>
 
-        <section class="card glass center-content">
-            <div class="card-header"><h2>PILE OU FACE</h2></div>
-            <div class="coin-wrapper">
-                <div id="coin" class="coin">
-                    <div class="side front">?</div>
-                    <div class="side back"></div>
-                </div>
-            </div>
-            <button class="btn-main" onclick="flipCoin()">LANCER</button>
-        </section>
-
         <section class="card glass">
-            <div class="card-header"><h2>HISTORIQUE</h2></div>
+            <div class="card-header">
+                <h2>HISTORIQUE</h2>
+                <button onclick="clearHistory()" class="btn-text-danger">Vider</button>
+            </div>
             <div id="historyList" class="history-container"></div>
         </section>
     </main>
 
     <canvas id="confettiCanvas"></canvas>
+
+    <div id="modalOverlay" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content glass" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 id="modalTitle">TITRE</h2>
+                <button onclick="closeModal()" class="close-btn">&times;</button>
+            </div>
+            <div id="modalBody" class="modal-body"></div>
+        </div>
+    </div>
+
+    <div id="toastMessage" class="toast-message"></div>
+
     <script src="script.js"></script>
 </body>
 </html>

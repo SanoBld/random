@@ -1,30 +1,37 @@
 :root {
-    --bg: #f5f5f7; --card: rgba(255, 255, 255, 0.8);
-    --text: #1d1d1f; --accent: #007aff; --border: rgba(0,0,0,0.1);
+    --bg-color: #f0f2f5; --card-bg: rgba(255, 255, 255, 0.7);
+    --text: #1d1d1f; --accent: #007aff; --accent-fg: #ffffff;
+    --border: rgba(0,0,0,0.08); --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
 }
 
-.theme-dark { --bg: #000; --card: rgba(28, 28, 30, 0.8); --text: #fff; --border: rgba(255,255,255,0.1); }
+.theme-dark {
+    --bg-color: #0f0f11; --card-bg: rgba(28, 28, 30, 0.7);
+    --text: #f5f5f7; --border: rgba(255, 255, 255, 0.1);
+}
 
-/* MODE PERFORMANCE (Désactive les flous et animations lourdes) */
-body.perf-mode .glass { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: var(--card); }
-body.perf-mode * { transition: none !important; animation-duration: 0.01s !important; }
+/* PERFORMANCE MODE */
+body.perf-mode .glass { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: var(--card-bg); }
+body.perf-mode .background-blobs { display: none; }
+body.perf-mode * { transition: none !important; animation-duration: 0.1s !important; }
 
-body { background: var(--bg); color: var(--text); font-family: -apple-system, sans-serif; margin: 0; padding: 20px; }
+body { background: var(--bg-color); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 20px; transition: 0.3s; }
+
+.glass { background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border); box-shadow: var(--shadow); border-radius: 24px; }
 
 .container { max-width: 900px; margin: 0 auto; display: grid; gap: 20px; }
 .grid-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.card { background: var(--card); backdrop-filter: blur(20px); border-radius: 20px; padding: 20px; border: 1px solid var(--border); }
+.card { padding: 25px; display: flex; flex-direction: column; gap: 15px; }
+.center-content { align-items: center; text-align: center; }
 
-/* --- DÉS (POINTS / PIPS) --- */
-.dice-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 15px; }
+/* DÉS AVEC POINTS */
 .die {
-    width: 50px; height: 50px; background: white; border-radius: 10px;
+    width: 60px; height: 60px; background: white; border-radius: 12px;
     display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);
-    padding: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 8px; gap: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #ddd;
 }
-.dot { width: 8px; height: 8px; background: #333; border-radius: 50%; align-self: center; justify-self: center; }
+.dot { width: 100%; height: 100%; background: #333; border-radius: 50%; }
 
-/* Positions des points selon la valeur */
+/* Placement des points par valeur */
 .die[data-val="1"] .dot { grid-area: 2/2; }
 .die[data-val="2"] .dot:nth-child(1) { grid-area: 1/1; }
 .die[data-val="2"] .dot:nth-child(2) { grid-area: 3/3; }
@@ -47,10 +54,13 @@ body { background: var(--bg); color: var(--text); font-family: -apple-system, sa
 .die[data-val="6"] .dot:nth-child(5) { grid-area: 2/3; }
 .die[data-val="6"] .dot:nth-child(6) { grid-area: 3/3; }
 
-/* Autres styles simplifiés */
-.btn-main { background: var(--accent); color: #fff; border: none; padding: 12px; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; }
-.wheel-wrapper { position: relative; width: 200px; height: 200px; margin: 0 auto; }
-canvas { width: 100%; height: 100%; }
-.indicator { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); border-top: 20px solid var(--accent); border-left: 10px solid transparent; border-right: 10px solid transparent; z-index: 2; }
+/* Autres styles */
+.btn-main { background: var(--accent); color: var(--accent-fg); border: none; padding: 14px; border-radius: 14px; font-weight: 700; cursor: pointer; }
 .theme-bar { display: flex; justify-content: center; gap: 10px; padding: 10px; border-radius: 50px; margin-bottom: 20px; }
-textarea { width: 100%; height: 80px; border-radius: 10px; border: none; background: rgba(127,127,127,0.1); color: var(--text); padding: 10px; }
+textarea { width: 100%; height: 100px; border-radius: 14px; border: none; background: rgba(127,127,127,0.1); color: var(--text); padding: 12px; font-family: inherit; }
+.wheel-wrapper { position: relative; width: 250px; height: 250px; margin: 10px auto; }
+canvas { width: 100%; height: 100%; }
+.indicator { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); border-top: 20px solid var(--accent); border-left: 10px solid transparent; border-right: 10px solid transparent; z-index: 5; }
+.team-item { background: rgba(127,127,127,0.05); padding: 12px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 8px; }
+.history-item { display: flex; justify-content: space-between; padding: 8px 12px; background: rgba(127,127,127,0.05); border-radius: 8px; margin-bottom: 5px; font-size: 0.85rem; }
+#confettiCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 1000; }
